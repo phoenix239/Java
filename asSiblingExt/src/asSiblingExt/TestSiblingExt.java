@@ -1,5 +1,7 @@
 package asSiblingExt;
 
+import java.util.StringTokenizer;
+
 import javax.swing.JOptionPane;
 
 import asSiblingExt.SiblingExt;
@@ -11,38 +13,35 @@ public static void main(String[] args) {
 		int age, weight, height;
 		String name, in, out;
 		
-		name = JOptionPane.showInputDialog(null, "Enter the first persons name");
-		in = JOptionPane.showInputDialog(null, "Enter " + name + "'s age");
-		age = Integer.parseInt(in);
-		in = JOptionPane.showInputDialog(null, "Enter " + name + "'s weight");
-		weight = Integer.parseInt(in);
-		in = JOptionPane.showInputDialog(null, "Enter " + name + "'s height");
-		height = Integer.parseInt(in);
+		in = JOptionPane.showInputDialog(null, "Enter the first persons info (separated by spaces)");
+		StringTokenizer tok = new StringTokenizer(in, " ");
+		name = tok.nextToken();
+		age = Integer.parseInt(tok.nextToken());
+		weight = Integer.parseInt(tok.nextToken());
+		height = Integer.parseInt(tok.nextToken());
 		
 		SiblingExt s1 = new SiblingExt(name, age, weight, height);
 		
-		name = JOptionPane.showInputDialog(null, "Enter the second persons name");
-		in = JOptionPane.showInputDialog(null, "Enter " + name + "'s age");
-		age = Integer.parseInt(in);
-		in = JOptionPane.showInputDialog(null, "Enter " + name + "'s weight");
-		weight = Integer.parseInt(in);
-		in = JOptionPane.showInputDialog(null, "Enter " + name + "'s height");
-		height = Integer.parseInt(in);
+		in = JOptionPane.showInputDialog(null, "Enter the second persons info (separated by spaces)");
+		StringTokenizer tok2 = new StringTokenizer(in, " ");
+		name = tok2.nextToken();
+		age = Integer.parseInt(tok2.nextToken());
+		weight = Integer.parseInt(tok2.nextToken());
+		height = Integer.parseInt(tok2.nextToken());
 		
 		SiblingExt s2 = new SiblingExt(name, age, weight, height);
 		
-		name = JOptionPane.showInputDialog(null, "Enter the third persons name");
-		in = JOptionPane.showInputDialog(null, "Enter " + name + "'s age");
-		age = Integer.parseInt(in);
-		in = JOptionPane.showInputDialog(null, "Enter " + name + "'s weight");
-		weight = Integer.parseInt(in);
-		in = JOptionPane.showInputDialog(null, "Enter " + name + "'s height");
-		height = Integer.parseInt(in);
+		in = JOptionPane.showInputDialog(null, "Enter the third persons info (separated by spaces)");
+		StringTokenizer tok3 = new StringTokenizer(in, " ");
+		name = tok3.nextToken();
+		age = Integer.parseInt(tok3.nextToken());
+		weight = Integer.parseInt(tok3.nextToken());
+		height = Integer.parseInt(tok3.nextToken());
 		
 		SiblingExt s3 = new SiblingExt(name, age, weight, height);
 		
-		out = "The Lightest sibling: " + getLightest(s1, s2, s3) 
-		+ "\nThe youngest sibling: " + getYoungest(s1, s2, s3) 
+		out = "The Lightest Sibling: " + getLightest(s1, s2, s3) 
+		+ "\nThe Youngest Sibling: " + getYoungest(s1, s2, s3) 
 		+ "\nThe Tallest Sibling: " + getTallest(s1, s2, s3);
 		
 		JOptionPane.showMessageDialog(null, out);
