@@ -16,7 +16,7 @@ public class TestDay {
 		
 		Day d = new Day(day, month);
 		
-		out = "Day Number for " + d.getDay() + "/" + d.getMonth() + " is " + d.findDayNum();
+		out = "Day Number for " + month + "/" + day + " is " + d.findDayNum();
 		JOptionPane.showMessageDialog(null, out);
 		
 	}
