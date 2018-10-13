@@ -1,26 +1,32 @@
 package asStudentExtFileIO;
 
+import java.io.*;
 import java.util.StringTokenizer;
-
-import javax.swing.JOptionPane;
 
 import asStudentExtFileIO.StudentExt;
 
 public class TestStudentExtFileIO {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)throws Exception {
 
-		String in, name, grade, type;
-		int numStudent, id, exams;		
-				
-		in = JOptionPane.showInputDialog("Enter number of students");
-		numStudent = Integer.parseInt(in);
-		
-		StudentExt[] st = new StudentExt[numStudent];
-		
-		for(int i = 0; i < st.length; i++) {
-			in = JOptionPane.showInputDialog("Enter data for student number " + (i+1));
-			StringTokenizer tok = new StringTokenizer(in, ",");
+		String in, outAll, name, grade, type;
+	    int studentCount, id, exams;
+
+	    BufferedReader br = new BufferedReader(new FileReader("in.txt"));
+
+	    PrintWriter pw = new PrintWriter (new FileWriter("out.txt"));
+
+	    in = br.readLine();
+	    studentCount = Integer.parseInt(in);
+	    
+	    StudentExt[] st = new StudentExt[studentCount];
+
+	    outAll = "Student report:\n";
+
+	    for (int i=0; i<studentCount; i++){
+	    	in = br.readLine();
+	    	
+	    	StringTokenizer tok = new StringTokenizer(in, ",");
 			
 			id = Integer.parseInt(tok.nextToken().trim());
 			name = tok.nextToken().trim();
@@ -33,10 +39,10 @@ public class TestStudentExtFileIO {
 			
 			type = tok.nextToken().trim();
 			
-			st[i] = new StudentExt(id,name,scores,type);			
+			st[i] = new StudentExt(id,name,scores,type);
 		}
-		
-		String[] out = new String[] {"","","","","","",""};
+
+	    String[] out = new String[] {"","","","","","",""};
 		
 		for(int i = 0; i < st.length; i++) {
 			grade = st[i].findGrade();
@@ -64,20 +70,15 @@ public class TestStudentExtFileIO {
 
 		    }
 		
-			displayResult(out);
-			
-			System.exit(0);
+		for (int i = 0; i < out.length; i++){
+		      outAll += out[i];
+		    }
 
-	}	
-	
-	public static void displayResult(String[] s){
-		String outAll = "";
-		for (int i = 0; i < s.length; i++){
-	      outAll = outAll + s[i];
-	    }
+	    pw.println(outAll);
+	    pw.flush();
 
-	    JOptionPane.showMessageDialog(null, outAll);
-
-	}
-	
+	    if (br != null) br.close();
+	    if (pw != null) pw.close();
+	    System.exit(0);
+	  }
 }
