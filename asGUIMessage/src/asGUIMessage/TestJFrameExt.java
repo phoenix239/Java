@@ -3,8 +3,9 @@ package asGUIMessage;
 public class TestJFrameExt {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		JFrameExt f = new JFrameExt ( );
+		f.setSize (400, 200);
+		f.setVisible (true);
 	}
 
 }
