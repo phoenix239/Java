@@ -24,7 +24,7 @@ public class JFrameExt extends JFrame implements ActionListener{
 		this.setContentPane (jpMain);
 		
 		
-		jpMain.add(jpe, BorderLayout.NORTH);
+		jpMain.add(jpe, BorderLayout.CENTER);
 		jpMain.add(jp, BorderLayout.SOUTH);
 		
 		jp.add(jbtHappy);
@@ -34,6 +34,9 @@ public class JFrameExt extends JFrame implements ActionListener{
 		jbtHappy.addActionListener(this);
 		jbtSad.addActionListener(this);
 		jbtPicture.addActionListener(this);
+		
+		jpe.setBackground(Color.BLACK);
+		jp.setBackground(Color.BLACK);
 		
 	}
 

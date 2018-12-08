@@ -1,7 +1,11 @@
 package asDraw;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.net.*;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class JPanelExt extends JPanel{
@@ -21,19 +25,32 @@ public class JPanelExt extends JPanel{
 		//include the code that does the drawing here.
 		
 		if (this.pictureType.equalsIgnoreCase("Happy")){
-			g.drawOval(0,0,100,100);
-			g.fillOval(25,25,10,10);
-			g.fillOval(65,25,10,10);
-			g.drawArc(25,25,50,50,0,-180);
+			g.setColor(Color.yellow);
+		    g.fillOval(0,0,300,300);
+		    g.setColor(Color.RED);
+		    g.fillOval(80,75,30,30);
+		    g.fillOval(190,75,30,30);
+		    g.setColor(Color.black);
+		    g.fillArc (75,100,150,150,0,-180);
 		}
 		else if (this.pictureType.equalsIgnoreCase ("Sad")){
-			g.drawOval(0,0,100,100);
-			g.fillOval(25,25,10,10);
-			g.fillOval(65,25,10,10);
-			g.drawArc(25,50,50,50,0,180);
+			g.setColor(Color.GREEN);
+	        g.fillOval(0,0,300,300);
+	        g.setColor(Color.black );
+	        g.fillOval(80,75,30,30);
+	        g.fillOval(190,75,30,30);
+	        g.setColor(Color.black);
+	        g.drawArc(75,150,150,150,0,180);
 		}
 		else if (this.pictureType.equalsIgnoreCase ("Picture")){
 			
+			int n = 1; //((int)(Math.random() * 4)) + 1;
+			
+			URL url = getClass().getResource(n + ".gif");
+
+			ImageIcon imageIcon = new ImageIcon (url);
+			Image image = imageIcon.getImage( );
+			g.drawImage (image,0,0,this.getWidth( ), this.getHeight ( ) , this);
 		}
 	}
 	
