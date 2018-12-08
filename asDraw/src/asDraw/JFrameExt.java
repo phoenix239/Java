@@ -1,12 +1,8 @@
 package asDraw;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.event.*;
+import javax.swing.*;
 
 public class JFrameExt extends JFrame implements ActionListener{
 	
@@ -48,6 +44,7 @@ public class JFrameExt extends JFrame implements ActionListener{
 			 jpe.setPictureType("Sad");
 		 }
 		 else if(e.getSource ( ) == jbtPicture){
+			 jpe.setImg();
 			 jpe.setPictureType("Picture");
 		 }
 	 }
