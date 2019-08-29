@@ -139,7 +139,7 @@ public class testWindowMain extends JFrame {
 		});
 		panel_3.add(jtfDiv);
 		
-		JButton jtfClr = new JButton("Clr");
+		JButton jtfClr = new JButton("Clear");
 		jtfClr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jtfNum1.setText("");
