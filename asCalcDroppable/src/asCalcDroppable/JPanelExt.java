@@ -65,8 +65,8 @@ public class JPanelExt extends JPanel {
 		panel_3.add(panel_3_0);
 		
 		JRadioButton jrbAdd = new JRadioButton("+");
-		buttonGroup.add(jrbAdd);
 		jrbAdd.setSelected(true);
+		buttonGroup.add(jrbAdd);
 		jrbAdd.setBackground(Color.RED);
 		panel_3_0.add(jrbAdd);
 		
