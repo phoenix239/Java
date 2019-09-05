@@ -11,12 +11,17 @@ import javax.swing.JButton;
 import java.awt.CardLayout;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
+import java.awt.event.ActionListener;
 
 public class JPanelExt extends JPanel {
-	private JTextField jpNum1;
-	private JTextField jpNum2;
-	private JTextField jpSum;
+	private JTextField jtfNum1;
+	private JTextField jtfNum2;
+	private JTextField jtfSum;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final Action action = new SwingAction();
 
 	public JPanelExt() {
 		setLayout(new GridLayout(4, 1, 0, 0));
@@ -26,23 +31,23 @@ public class JPanelExt extends JPanel {
 		add(panel_0);
 		panel_0.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblFirstNumber = new JLabel("First Number: ");
+		JLabel lblFirstNumber = new JLabel("1st Number: ");
 		panel_0.add(lblFirstNumber);
 		
-		jpNum1 = new JTextField();
-		panel_0.add(jpNum1);
-		jpNum1.setColumns(10);
+		jtfNum1 = new JTextField();
+		panel_0.add(jtfNum1);
+		jtfNum1.setColumns(10);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.CYAN);
 		add(panel_1);
 		
-		JLabel lblSecondNumber = new JLabel("Second Number: ");
+		JLabel lblSecondNumber = new JLabel("Number 2: ");
 		panel_1.add(lblSecondNumber);
 		
-		jpNum2 = new JTextField();
-		panel_1.add(jpNum2);
-		jpNum2.setColumns(10);
+		jtfNum2 = new JTextField();
+		panel_1.add(jtfNum2);
+		jtfNum2.setColumns(10);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.GREEN);
@@ -51,9 +56,9 @@ public class JPanelExt extends JPanel {
 		JLabel lblResults = new JLabel("Results: ");
 		panel_2.add(lblResults);
 		
-		jpSum = new JTextField();
-		panel_2.add(jpSum);
-		jpSum.setColumns(10);
+		jtfSum = new JTextField();
+		panel_2.add(jtfSum);
+		jtfSum.setColumns(15);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.RED);
@@ -90,11 +95,45 @@ public class JPanelExt extends JPanel {
 		panel_3.add(panel_3_1);
 		
 		JButton jbCalc = new JButton("Calculate");
+		jbCalc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				double num1 = Double.parseDouble(jtfNum1.getText().trim());
+				double num2 = Double.parseDouble(jtfNum2.getText().trim());
+
+				if(jrbAdd.isSelected()) {
+					jtfSum.setText("" + (num1 + num2));
+				}
+				else if(jrbSub.isSelected()) {
+					jtfSum.setText("" + (num1 - num2));
+				}
+				else if(jrbMul.isSelected()) {
+					jtfSum.setText("" + (num1 * num2));
+				}
+				else if(jrbDiv.isSelected()) {
+					jtfSum.setText("" + (num1 / num2));
+				}
+			}
+		});
 		panel_3_1.add(jbCalc);
 		
 		JButton jbClr = new JButton("Clear");
+		jbClr.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jtfNum1.setText("");
+				jtfNum2.setText("");
+				jtfSum.setText("");
+			}
+		});
 		panel_3_1.add(jbClr);
 
 	}
 
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
 }
