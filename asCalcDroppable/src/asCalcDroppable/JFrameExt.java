@@ -7,6 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.SoftBevelBorder;
 
 public class JFrameExt extends JFrame {
 
@@ -25,21 +30,19 @@ public class JFrameExt extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public JFrameExt() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 300);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(1, 2, 0, 0));
 		
 		JPanelExt panelExt_0 = new JPanelExt();
+		panelExt_0.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(panelExt_0);
 		
 		JPanelExt panelExt_1 = new JPanelExt();
+		panelExt_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(panelExt_1);
 	}
 

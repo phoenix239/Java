@@ -42,7 +42,7 @@ public class JPanelExt extends JPanel {
 		panel_1.setBackground(Color.CYAN);
 		add(panel_1);
 		
-		JLabel lblSecondNumber = new JLabel("Number 2: ");
+		JLabel lblSecondNumber = new JLabel("2nd Number: ");
 		panel_1.add(lblSecondNumber);
 		
 		jtfNum2 = new JTextField();
@@ -58,7 +58,7 @@ public class JPanelExt extends JPanel {
 		
 		jtfSum = new JTextField();
 		panel_2.add(jtfSum);
-		jtfSum.setColumns(15);
+		jtfSum.setColumns(12);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.RED);
