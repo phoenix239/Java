@@ -1,6 +1,6 @@
 package asException;
 
-public class IdOutOfRangeException extends RuntimeException {
+public class IdOutOfRangeException extends Exception {
 	public IdOutOfRangeException () { 
 		super ("Id Out of Range");
 	}

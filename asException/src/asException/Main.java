@@ -36,7 +36,7 @@ public class Main {
 		} while (true);
 	}
 
-	private static void validateId(String id) {
+	private static void validateId(String id) throws IdOutOfRangeException, IdNotAWholeNumberException {
 		try {
 			int num = Integer.parseInt(id);
 			// is an integer!
