@@ -1,50 +1,59 @@
 package asException;
 
+import javax.swing.*;
+
 public class Main {
 
 	public static void main(String[] args) {
-		String out = null;
-
 		do {
-
 			try {
-
 				String id = JOptionPane.showInputDialog("Enter Id");
 				validateId(id);
-				out = "Validated id: " + id + "\n";
-				JOptionPane.showMessageDialog(null, out);
+				JOptionPane.showMessageDialog(null, "Validated id: " + id + "\n");
 				break;
-
-			}
-			catch (IdNotWholeNumberException e) {
-				String msg = e.getMessage();
-				System.out.println(msg);
+			} catch (IdNotAWholeNumberException e) {
+				System.out.println(e.getMessage());
 				// e.printStackTrace();
-			}
-			catch (IdOutOfRangeException e) {
-				String msg = e.getMessage();
-				System.out.println(msg);
+			} catch (IdOutOfRangeException e) {
+				System.out.println(e.getMessage());
 				// e.printStackTrace();
 			}
 		} while (true);
+
 		do {
 			try {
 				String name = JOptionPane.showInputDialog("Enter name");
 				validateName(name);
-				out = "Validated Name: " + name + "\n";
-				JOptionPane.showMessageDialog(null, out);
+				JOptionPane.showMessageDialog(null, "Validated Name: " + name + "\n");
 				break;
-			}
-			catch (NotAlphabeticException e) {
-				String msg = e.getMessage();
-				System.out.println(msg);
+			} catch (NotAlphabeticException e) {
+				System.out.println(e.getMessage());
 				// e.printStackTrace();
-			}
-			catch (NotSpecifiedException e) {
-				String msg = e.getMessage();
-				System.out.println(msg);
+			} catch (NotSpecifiedException e) {
+				System.out.println(e.getMessage());
 				// e.printStackTrace();
 			}
 		} while (true);
+	}
+
+	private static void validateId(String id) {
+		try {
+			int num = Integer.parseInt(id);
+			// is an integer!
+			if (num < 1 || num > 999) {
+				throw new IdOutOfRangeException();
+			}
+		} catch (NumberFormatException e) {
+			// not an integer!
+			throw new IdNotAWholeNumberException();
+		}
+	}
+
+	public static void validateName(String name) {
+		if (name == null || name.equals("")) {
+			throw new NotSpecifiedException();
+		} else if (!(name.matches("[a-zA-Z]+"))) {
+			throw new NotAlphabeticException();
+		}
 	}
 }
