@@ -1,10 +1,10 @@
 package asMultithreadMessages;
 
-public class MultithreadingExt extends Thread{
+public class ThreadExt extends Thread{
 	String id;
 	int reps;
 	
-	public MultithreadingExt(String inputId, int inputReps) {
+	public ThreadExt(String inputId, int inputReps) {
 		id = inputId;
 		reps = inputReps;
 	}
