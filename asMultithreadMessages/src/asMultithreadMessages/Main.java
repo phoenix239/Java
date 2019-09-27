@@ -15,11 +15,16 @@ public class Main {
 		sz = JOptionPane.showInputDialog("Enter Message: ");
 		nz = Integer.parseInt(JOptionPane.showInputDialog("Enter Count"));
 		
-		ThreadExt thread1 = new ThreadExt(sx,nx); 
-        thread1.start();
-        ThreadExt thread2 = new ThreadExt(sy,ny); 
-        thread2.start();
-        ThreadExt thread3 = new ThreadExt(sz,nz); 
-        thread3.start();
+		Message r1 = new Message(sx,nx);
+        Message r2 = new Message(sy,ny); 
+        Message r3 = new Message(sz,nz);
+        
+        Thread t1 = new Thread(r1);
+        Thread t2 = new Thread(r2);
+        Thread t3 = new Thread(r3);
+        
+        t1.start();
+        t2.start();
+        t3.start();
 	}
 }
