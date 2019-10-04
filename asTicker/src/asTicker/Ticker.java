@@ -8,24 +8,40 @@ public class Ticker extends JPanel implements Runnable{
 	
 	private boolean moving = false;
 	private String symbol;
-	private String stockName = "Not Set";
-	private double stockPrice = 0.0;
-	private boolean direction = true;
-	private long sleepTime = 50;
-	private int x = 190;
+	private String stockName;
+	private double stockPrice;
+	private boolean direction;
+	private long sleepTime;
+	private int x = 160;
 	private int y = 35;
 	
 	
 	public Ticker() {
 		Thread t = new Thread(this);
 		t.start();
-		symbol = stockName + "   " + stockPrice;
 	}
 	
 	@Override	
 	public void run() {
+		symbol = stockName + "   " + stockPrice;
 		while(true){
 			if (moving){
+				if(direction) {
+					if(x <= this.getWidth()) {
+						x += 5;
+					}
+					else {
+						x = -50;
+					}
+				}
+				else{
+					if(x >= -50) {
+						x += -5;
+					}
+					else {
+						x = this.getWidth();
+					}
+				}
 				repaint();
 			}
 			try {
