@@ -6,8 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
 
-public class TestCompSync extends JFrame {
+public class TestThreadExt extends JFrame {
 
 	private JPanel contentPane;
 
@@ -18,7 +20,7 @@ public class TestCompSync extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TestCompSync frame = new TestCompSync();
+					TestThreadExt frame = new TestThreadExt();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,22 +32,16 @@ public class TestCompSync extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TestCompSync() {
+	public TestThreadExt() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 640, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JPanel panel_0 = new JPanel();
-		contentPane.add(panel_0, BorderLayout.NORTH);
-		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
-		
-		JPanel panel_2 = new JPanel();
-		contentPane.add(panel_2, BorderLayout.SOUTH);
+		JPanelExt panelExt = new JPanelExt();
+		contentPane.add(panelExt, BorderLayout.NORTH);
 	}
 
 }
