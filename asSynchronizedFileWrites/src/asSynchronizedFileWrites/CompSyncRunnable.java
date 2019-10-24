@@ -27,6 +27,7 @@ public class CompSyncRunnable implements Runnable {
 					Thread.sleep(100);
 				}
 			}
+			pw.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

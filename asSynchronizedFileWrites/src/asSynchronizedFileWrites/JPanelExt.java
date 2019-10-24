@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
-import java.awt.BorderLayout;
 import java.awt.Color;
+import javax.swing.JScrollPane;
 
 public class JPanelExt extends JPanel {
 	private JTextField jtfMsg1;
@@ -22,16 +22,12 @@ public class JPanelExt extends JPanel {
 	private String msg2;
 	private int count;
 	private String fileName;
-	
 
-	/**
-	 * Create the panel.
-	 */
 	public JPanelExt() {
-		setLayout(new BorderLayout(0, 0));
+		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel TxtInput = new JPanel();
-		add(TxtInput, BorderLayout.NORTH);
+		add(TxtInput);
 		TxtInput.setBackground(new Color(204, 51, 0));
 		TxtInput.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -64,18 +60,20 @@ public class JPanelExt extends JPanel {
 		jtfFileName.setColumns(10);
 
 		JPanel TxtBox = new JPanel();
-		add(TxtBox, BorderLayout.CENTER);
+		add(TxtBox);
 		TxtBox.setBackground(new Color(0, 128, 128));
-		FlowLayout fl_TxtBox = (FlowLayout) TxtBox.getLayout();
-
+		
+		JScrollPane scrollPane = new JScrollPane();
+		TxtBox.add(scrollPane);
 		JTextArea textArea = new JTextArea();
+		scrollPane.setViewportView(textArea);
+		textArea.setLineWrap(true);
 		textArea.setEditable(false);
 		textArea.setRows(15);
 		textArea.setColumns(50);
-		TxtBox.add(textArea);
 
 		JPanel Buttons = new JPanel();
-		add(Buttons, BorderLayout.SOUTH);
+		add(Buttons);
 		Buttons.setBackground(new Color(255, 215, 0));
 
 		JButton btnWrite = new JButton("Write");
@@ -148,11 +146,7 @@ public class JPanelExt extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					BufferedReader br = new BufferedReader(new FileReader(fileName));
-
-					String st;
-					while ((st = br.readLine()) != null) {
-						System.out.println(st);
-					}
+					textArea.read(br, null);
 					br.close();
 				} catch (Exception ex) {
 					ex.printStackTrace();
