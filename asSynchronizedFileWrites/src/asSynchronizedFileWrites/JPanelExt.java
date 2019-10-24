@@ -83,6 +83,15 @@ public class JPanelExt extends JPanel {
 				msg2 = jtfMsg2.getText();
 				count = Integer.parseInt(jtfCount.getText().trim());
 				fileName = jtfFileName.getText();
+				
+				//clear file - Allows reusing filename
+				try {
+					PrintWriter pw = new PrintWriter(new FileWriter(fileName));
+					pw.print("");
+					pw.close();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 
 				NoSyncRunnable noSync1 = new NoSyncRunnable(msg1, count, fileName);
 				NoSyncRunnable noSync2 = new NoSyncRunnable(msg2, count, fileName);
@@ -104,6 +113,16 @@ public class JPanelExt extends JPanel {
 				msg2 = jtfMsg2.getText();
 				count = Integer.parseInt(jtfCount.getText().trim());
 				fileName = jtfFileName.getText();
+				
+				//clear file - Allows reusing filename
+				try {
+					PrintWriter pw = new PrintWriter(new FileWriter(fileName));
+					pw.print("");
+					pw.close();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				
 				Object obj = new Object();
 
 				CompSyncRunnable CompSync1 = new CompSyncRunnable(msg1, count, fileName, obj);
@@ -113,7 +132,7 @@ public class JPanelExt extends JPanel {
 				Thread t2 = new Thread(CompSync2);
 				t1.start();
 				t2.start();
-
+				
 				System.out.println("CompWrite");
 			}
 		});
@@ -126,6 +145,16 @@ public class JPanelExt extends JPanel {
 				msg2 = jtfMsg2.getText();
 				count = Integer.parseInt(jtfCount.getText().trim());
 				fileName = jtfFileName.getText();
+				
+				//clear file - Allows reusing filename
+				try {
+					PrintWriter pw = new PrintWriter(new FileWriter(fileName));
+					pw.print("");
+					pw.close();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				
 				Object obj = new Object();
 
 				CoopSyncRunnable CoopSync1 = new CoopSyncRunnable(msg1, count, fileName, obj);
@@ -148,6 +177,7 @@ public class JPanelExt extends JPanel {
 					BufferedReader br = new BufferedReader(new FileReader(fileName));
 					textArea.read(br, null);
 					br.close();
+					textArea.requestFocus();
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

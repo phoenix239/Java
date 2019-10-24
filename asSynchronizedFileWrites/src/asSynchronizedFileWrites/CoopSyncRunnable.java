@@ -6,7 +6,7 @@ public class CoopSyncRunnable implements Runnable{
 	private String msg;
 	private int count;
 	private String fileName;
-	Object obj;
+	private Object obj;
 	
 	public CoopSyncRunnable(String msg, int count, String fileName, Object obj) {
 		super();
@@ -19,11 +19,12 @@ public class CoopSyncRunnable implements Runnable{
 	@Override
 	public void run() {
 		try {
-			PrintWriter pw = new PrintWriter(new FileWriter(fileName), true);
+			PrintWriter pw = new PrintWriter(new FileWriter(fileName, true), true);
 			Thread.sleep(100);
 			for (int i = 0; i < count; i++) {
 				synchronized (obj) {
 					pw.println(msg);
+					System.out.println(msg);
 					Thread.sleep(100);
 					obj.notify();
 					obj.wait();
@@ -34,6 +35,7 @@ public class CoopSyncRunnable implements Runnable{
 				obj.notify();
 			}
 			pw.close();
+			System.out.println("Thread Done");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

@@ -6,7 +6,7 @@ public class CompSyncRunnable implements Runnable {
 	private String msg;
 	private int count;
 	private String fileName;
-	Object obj;
+	private Object obj;
 
 	public CompSyncRunnable(String msg, int count, String fileName, Object obj) {
 		super();
@@ -19,15 +19,17 @@ public class CompSyncRunnable implements Runnable {
 	@Override
 	public void run() {
 		try {
-			PrintWriter pw = new PrintWriter(new FileWriter(fileName), true);
+			PrintWriter pw = new PrintWriter(new FileWriter(fileName, true), true);
 			Thread.sleep(100);
 			synchronized (obj) {
 				for (int i = 0; i < count; i++) {
 					pw.println(msg);
+					System.out.println(msg);
 					Thread.sleep(100);
 				}
 			}
 			pw.close();
+			System.out.println("Thread Done");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
