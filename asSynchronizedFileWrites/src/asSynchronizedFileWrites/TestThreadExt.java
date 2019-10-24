@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+import java.awt.CardLayout;
 
 public class TestThreadExt extends JFrame {
 
@@ -34,14 +35,14 @@ public class TestThreadExt extends JFrame {
 	 */
 	public TestThreadExt() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 640, 400);
+		setBounds(100, 100, 496, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(new CardLayout(0, 0));
 		
 		JPanelExt panelExt = new JPanelExt();
-		contentPane.add(panelExt, BorderLayout.NORTH);
+		contentPane.add(panelExt, "name_2426160015773128");
 	}
 
 }

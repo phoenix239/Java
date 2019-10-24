@@ -40,21 +40,21 @@ public class JPanelExt extends JPanel {
 
 		jtfMsg1 = new JTextField();
 		TxtInput.add(jtfMsg1);
-		jtfMsg1.setColumns(10);
+		jtfMsg1.setColumns(5);
 
 		JLabel lblNewLabel_1 = new JLabel("  Msg 2: ");
 		TxtInput.add(lblNewLabel_1);
 
 		jtfMsg2 = new JTextField();
 		TxtInput.add(jtfMsg2);
-		jtfMsg2.setColumns(10);
+		jtfMsg2.setColumns(5);
 
 		JLabel lblNewLabel_2 = new JLabel("  Count: ");
 		TxtInput.add(lblNewLabel_2);
 
 		jtfCount = new JTextField();
 		TxtInput.add(jtfCount);
-		jtfCount.setColumns(10);
+		jtfCount.setColumns(5);
 
 		JLabel lblNewLabel_3 = new JLabel("  File Name:");
 		TxtInput.add(lblNewLabel_3);
