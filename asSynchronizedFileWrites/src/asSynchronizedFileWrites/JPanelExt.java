@@ -56,6 +56,7 @@ public class JPanelExt extends JPanel {
 		TxtInput.add(lblNewLabel_3);
 
 		jtfFileName = new JTextField();
+		jtfFileName.setText("myfile.txt");
 		TxtInput.add(jtfFileName);
 		jtfFileName.setColumns(10);
 
@@ -109,6 +110,7 @@ public class JPanelExt extends JPanel {
 		JButton btnCompWrite = new JButton("Comp Write");
 		btnCompWrite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				msg1 = jtfMsg1.getText();
 				msg2 = jtfMsg2.getText();
 				count = Integer.parseInt(jtfCount.getText().trim());
@@ -132,7 +134,7 @@ public class JPanelExt extends JPanel {
 				Thread t2 = new Thread(CompSync2);
 				t1.start();
 				t2.start();
-				
+
 				System.out.println("CompWrite");
 			}
 		});
