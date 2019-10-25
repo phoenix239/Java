@@ -18,11 +18,11 @@ public class NoSyncRunnable implements Runnable {
 	public void run() {
 		try {
 			PrintWriter pw = new PrintWriter(new FileWriter(fileName, true), true);
-			Thread.sleep(100);
+			Thread.sleep(10);
 			for (int i = 0; i < count; i++) {
 				pw.println(msg);
 				System.out.println(msg);
-				Thread.sleep(100);
+				Thread.sleep(10);
 			}
 			pw.close();
 			System.out.println("Thread Done");

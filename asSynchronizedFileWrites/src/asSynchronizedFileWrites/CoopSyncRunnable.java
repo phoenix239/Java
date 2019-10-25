@@ -20,16 +20,16 @@ public class CoopSyncRunnable implements Runnable{
 	public void run() {
 		try {
 			PrintWriter pw = new PrintWriter(new FileWriter(fileName, true), true);
-			Thread.sleep(100);
+			Thread.sleep(10);
 			for (int i = 0; i < count; i++) {
 				synchronized (obj) {
 					pw.println(msg);
 					System.out.println(msg);
-					Thread.sleep(100);
+					Thread.sleep(10);
 					obj.notify();
 					obj.wait();
 				}
-				Thread.sleep(100);
+				Thread.sleep(10);
 			}
 			synchronized (obj) {
 				obj.notify();
