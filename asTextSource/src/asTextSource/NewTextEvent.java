@@ -1,6 +1,6 @@
 package asTextSource;
 
-public class NewTextEvent implements NewTextListener{
+public class NewTextEvent{
 	private String newText;
 
 	public NewTextEvent(String newText) {
@@ -14,5 +14,4 @@ public class NewTextEvent implements NewTextListener{
 	public void setNewText(String newText) {
 		this.newText = newText;
 	}
-	
 }
