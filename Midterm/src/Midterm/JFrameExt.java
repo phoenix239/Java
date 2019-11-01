@@ -44,7 +44,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 		contentPane.setLayout(new GridLayout(1, 2, 0, 0));
 
 		JPanel panelLeft = new JPanel();
-		panelLeft.setBackground(Color.GREEN);
+		panelLeft.setBackground(Color.LIGHT_GRAY);
 		contentPane.add(panelLeft);
 
 		JPanel panelRight = new JPanel();
@@ -62,10 +62,10 @@ public class JFrameExt extends JFrame implements ActionListener {
 		jcboClassName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String className = (String) jcboClassName.getSelectedItem();
-				
-				//keep from crashing when selecting blank option
-				if(className.equalsIgnoreCase("")) return;
-				
+
+				// keep from crashing when selecting blank option
+				if (className.equalsIgnoreCase("")) className = "Midterm.Blank";
+
 				Object targetBeanObject = null;
 				try {
 					targetBeanObject = (JPanel) Beans.instantiate(null, className);
