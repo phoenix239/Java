@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.Beans;
+import java.lang.reflect.Field;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -52,7 +53,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 		panelRight.setLayout(new BorderLayout(0, 0));
 
 		JPanel panelTop = new JPanel();
-		panelTop.setBackground(Color.MAGENTA);
+		panelTop.setBackground(new Color(128, 0, 0));
 		panelRight.add(panelTop, BorderLayout.NORTH);
 		panelTop.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -64,7 +65,8 @@ public class JFrameExt extends JFrame implements ActionListener {
 				String className = (String) jcboClassName.getSelectedItem();
 
 				// keep from crashing when selecting blank option
-				if (className.equalsIgnoreCase("")) className = "Midterm.Blank";
+				if (className.equalsIgnoreCase(""))
+					className = "Midterm.Blank";
 
 				Object targetBeanObject = null;
 				try {
@@ -79,6 +81,25 @@ public class JFrameExt extends JFrame implements ActionListener {
 				contentPane.remove(0);
 				contentPane.add((JPanel) targetBeanObject, 0);
 				contentPane.validate();
+
+				// Populate Labels
+				Field[] var = targetBeanObject.getClass().getDeclaredFields();
+
+				for (int i = 0; i < jlbPropNames.length; i++) {
+					jlbPropNames[i].setText("");
+				}
+				for (int i = 0; i < var.length; i++) {
+					jlbPropNames[i].setText("   " + var[i].getName());
+				}
+				
+				
+				
+				//TESTING
+				for (int i = 0; i < var.length; i++) {
+					System.out.println(var[i].getName());
+					System.out.println(var[i].getType());
+				}
+
 			}
 		});
 		panelTop.add(jcboClassName);
@@ -89,23 +110,24 @@ public class JFrameExt extends JFrame implements ActionListener {
 		panelCenter.setLayout(new GridLayout(1, 0, 0, 0));
 
 		JPanel panelPropNames = new JPanel();
-		panelPropNames.setBackground(Color.PINK);
+		panelPropNames.setBackground(new Color(64, 224, 208));
 		panelCenter.add(panelPropNames);
 		panelPropNames.setLayout(new GridLayout(10, 1, 0, 0));
 
 		JPanel panelPropValues = new JPanel();
-		panelPropValues.setBackground(Color.CYAN);
+		panelPropValues.setBackground(new Color(0, 100, 0));
 		panelCenter.add(panelPropValues);
 		panelPropValues.setLayout(new GridLayout(10, 1, 0, 0));
 
 		for (int i = 0; i < jlbPropNames.length; i++) {
-			jlbPropNames[i] = new JLabel("  " + "ok");
+			jlbPropNames[i] = new JLabel("");
 			panelPropNames.add(jlbPropNames[i]);
 		}
 		for (int i = 0; i < jtfPropValues.length; i++) {
 			jtfPropValues[i] = new JTextField(10);
 			panelPropValues.add(jtfPropValues[i]);
 		}
+
 	}
 
 	@Override
