@@ -4,14 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.BeanInfo;
 import java.beans.Beans;
-import java.lang.reflect.Field;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+
 import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -21,6 +26,9 @@ public class JFrameExt extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JTextField[] jtfPropValues = new JTextField[10];
 	private JLabel[] jlbPropNames = new JLabel[10];
+	private JPanel targetBeanObject = null;
+	private Class<?> classObject = null;
+	private PropertyDescriptor[] pd = null;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -68,7 +76,6 @@ public class JFrameExt extends JFrame implements ActionListener {
 				if (className.equalsIgnoreCase(""))
 					className = "Midterm.Blank";
 
-				Object targetBeanObject = null;
 				try {
 					targetBeanObject = (JPanel) Beans.instantiate(null, className);
 				} catch (Exception e) {
@@ -83,23 +90,46 @@ public class JFrameExt extends JFrame implements ActionListener {
 				contentPane.validate();
 
 				// Populate Labels
-				Field[] var = targetBeanObject.getClass().getDeclaredFields();
+				BeanInfo bi = null;
+				try {
+					classObject = Class.forName(className);
+					bi = Introspector.getBeanInfo(classObject, JPanel.class);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				pd = bi.getPropertyDescriptors();
 
-				for (int i = 0; i < jlbPropNames.length; i++) {
+				String propName;
+
+				for (int i = 0; i < pd.length; i++) {
+					// Get property name from corresponding PropertyDescriptor array element.
+					// Set property name in the corresponding JLabel array element.
+					propName = pd[i].getName();
+
+					// Set propName as the text for the corresponding JLable.
+					jlbPropNames[i].setText("  " + propName);
+
+					Method mget = pd[i].getReadMethod();
+					Object robj = null;
+
+					try {
+						robj = mget.invoke(targetBeanObject, null);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					// convert the received object contents to a String
+					String sobj = robj.toString();
+
+					// Set the String sobj as the text in the corresponding text field.
+					jtfPropValues[i].setText(sobj);
+				}
+				
+				//Clean up old fields
+				for(int i = pd.length; i < 10; i++) {
 					jlbPropNames[i].setText("");
+					jtfPropValues[i].setText("");
 				}
-				for (int i = 0; i < var.length; i++) {
-					jlbPropNames[i].setText("   " + var[i].getName());
-				}
-				
-				
-				
-				//TESTING
-				for (int i = 0; i < var.length; i++) {
-					System.out.println(var[i].getName());
-					System.out.println(var[i].getType());
-				}
-
 			}
 		});
 		panelTop.add(jcboClassName);
@@ -125,14 +155,62 @@ public class JFrameExt extends JFrame implements ActionListener {
 		}
 		for (int i = 0; i < jtfPropValues.length; i++) {
 			jtfPropValues[i] = new JTextField(10);
-			panelPropValues.add(jtfPropValues[i]);
-		}
+			jtfPropValues[i].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int i;
+					String propName = "", propValue = "";
 
+					// Determine the name, value and index of the property that changed.
+					for (i = 0; i < jtfPropValues.length; i++) {
+						propValue = jtfPropValues[i].getText();
+						if (e.getSource() == jtfPropValues[i]) {
+							break;
+						}
+					}
+
+					//Throwing exceptions when typing in empty fields
+					if(i >= pd.length) {
+						System.out.println("Don't Type There...");
+						return;
+					}
+					
+					Class<?> propType = pd[i].getPropertyType();
+
+					// Get the property type as a String
+					String propTypeName = propType.getName();
+
+					// Create Object array for storing parameters
+					Object[] params = new Object[1];
+
+					// Depending upon property name, create correct parameter object.
+					if (propTypeName.equals("int")) {
+						params[0] = new Integer(Integer.parseInt(propValue));
+					} else if (propTypeName.equals("double")) {
+						params[0] = new Double(Double.parseDouble(propValue));
+					} else if (propTypeName.equals("boolean")) {
+						params[0] = new Boolean(propValue);
+					} else if (propTypeName.equals("java.lang.String")) {
+						params[0] = propValue;
+					}
+
+					// Get the set method object.
+					Method mset = pd[i].getWriteMethod();
+
+					// Invoke set method and pass it target bean and parameters.
+					try {
+						mset.invoke(targetBeanObject, params);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			});
+			panelPropValues.add(jtfPropValues[i]);
+
+		}
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// Code Here
+	public void actionPerformed(ActionEvent e) {
 	}
 
 }
