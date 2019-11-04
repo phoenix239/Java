@@ -1,6 +1,8 @@
 package asTextSource;
 
-public interface NewTextListener{
-	
+import java.util.EventListener;
+
+public interface NewTextListener extends EventListener{
+
 	public void newTextEntered (NewTextEvent nte);
 }

@@ -6,8 +6,10 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.ScrollPaneConstants;
 
-public class TextListener extends JPanel {
+public class TextListener extends JPanel implements NewTextListener{
 
+	private TextSource tSource = new TextSource(); 
+	
 	public TextListener() {
 		setBackground(new Color(255, 215, 0));
 		
@@ -20,6 +22,16 @@ public class TextListener extends JPanel {
 		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
 
+	}
+	
+	public void setSource(TextSource tSource) {
+		this.tSource = tSource;
+	}
+
+	@Override
+	public void newTextEntered(NewTextEvent nte) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
