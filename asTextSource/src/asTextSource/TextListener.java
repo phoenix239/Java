@@ -5,33 +5,35 @@ import java.awt.TextArea;
 import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.ScrollPaneConstants;
+import java.awt.FlowLayout;
 
 public class TextListener extends JPanel implements NewTextListener{
-
-	private TextSource tSource = new TextSource(); 
 	
+	TextArea textArea = new TextArea();
+
 	public TextListener() {
 		setBackground(new Color(255, 215, 0));
+		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scrollPane);
+		textArea.setRows(10);
+		textArea.setColumns(30);
 		
-		TextArea textArea = new TextArea();
 		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
-
 	}
 	
-	public void setSource(TextSource tSource) {
-		this.tSource = tSource;
+	public void setSource(TextSource source) {
+		source.addNewTextListener(this);
 	}
 
 	@Override
 	public void newTextEntered(NewTextEvent nte) {
-		// TODO Auto-generated method stub
-		
+		String newText = nte.getNewText();
+		textArea.append(newText + "\n");
 	}
 
 }
