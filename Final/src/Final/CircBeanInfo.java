@@ -1,12 +1,13 @@
 package Final;
 
-import java.beans.*;
+import java.beans.PropertyDescriptor;
+import java.beans.SimpleBeanInfo;
 
-public class RectBeanInfo extends SimpleBeanInfo {
+public class CircBeanInfo extends SimpleBeanInfo {
+	
+	Class beanClass = Circ.class;
 
-	Class beanClass = Rect.class;
-
-	public RectBeanInfo() {
+	public CircBeanInfo() {
 	}
 
 	public PropertyDescriptor[] getPropertyDescriptors() {
@@ -50,4 +51,5 @@ public class RectBeanInfo extends SimpleBeanInfo {
 			return null;
 		}
 	}
+
 }
