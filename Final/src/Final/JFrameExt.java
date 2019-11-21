@@ -1,4 +1,4 @@
-package Midterm;
+package Final;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -65,7 +65,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 		panelRight.add(panelTop, BorderLayout.NORTH);
 		panelTop.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		String[] list = { "", "Midterm.Rect", "Midterm.Circ", "Midterm.Ticker" };
+		String[] list = { "", "Final.Rect", "Final.Circ", "Final.Ticker" };
 
 		JComboBox<?> jcboClassName = new JComboBox<Object>(list);
 		jcboClassName.addActionListener(new ActionListener() {
@@ -74,7 +74,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 
 				// keep from crashing when selecting blank option
 				if (className.equalsIgnoreCase(""))
-					className = "Midterm.Blank";
+					className = "Final.Blank";
 
 				try {
 					targetBeanObject = (JPanel) Beans.instantiate(null, className);
