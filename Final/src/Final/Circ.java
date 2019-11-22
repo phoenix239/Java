@@ -6,7 +6,7 @@ import java.awt.*;
 public class Circ extends JPanel {
 	private int myXStart = 20;
 	private int myYStart = 20;
-	private String myFill = "yes";
+	private boolean myFill = true;
 	private int myWidth = 50;
 	private int myHeight = 50;
 	private String myForeColor = "Green";
@@ -30,7 +30,7 @@ public class Circ extends JPanel {
 			g.setColor(Color.yellow);
 		}
 
-		if (myFill.equalsIgnoreCase("Yes")) {
+		if (myFill) {
 			g.fillOval(myXStart, myYStart, myWidth, myHeight);
 		} else {
 			g.drawOval(myXStart, myYStart, myWidth, myHeight);
@@ -55,12 +55,12 @@ public class Circ extends JPanel {
 		return myYStart;
 	}
 
-	public void setMyFill(String myFill) {
+	public void setMyFill(boolean myFill) {
 		this.myFill = myFill;
 		repaint();
 	}
 
-	public String getMyFill() {
+	public boolean getMyFill() {
 		return myFill;
 	}
 

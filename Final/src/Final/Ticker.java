@@ -95,7 +95,7 @@ public class Ticker extends JPanel implements Runnable {
 		repaint();
 	}
 
-	public boolean isMyMoving() {
+	public boolean getMyMoving() {
 		return myMoving;
 	}
 
