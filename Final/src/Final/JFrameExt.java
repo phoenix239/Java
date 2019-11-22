@@ -8,6 +8,7 @@ import java.beans.BeanInfo;
 import java.beans.Beans;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.beans.PropertyEditor;
 import java.lang.reflect.Method;
 
 import javax.swing.JFrame;
@@ -25,10 +26,13 @@ public class JFrameExt extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField[] jtfPropValues = new JTextField[10];
+	private JComboBox[] jcboPropValues = new JComboBox[10];
 	private JLabel[] jlbPropNames = new JLabel[10];
+	private PropertyEditor[] pe = new PropertyEditor[10];
 	private JPanel targetBeanObject = null;
 	private Class<?> classObject = null;
 	private PropertyDescriptor[] pd = null;
+	JPanel panelPropValues;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -72,9 +76,9 @@ public class JFrameExt extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				String className = (String) jcboClassName.getSelectedItem();
 
-				// keep from crashing when selecting blank option
-				if (className.equalsIgnoreCase(""))
+				if (className.equalsIgnoreCase("")) {
 					className = "Final.Blank";
+				}
 
 				try {
 					targetBeanObject = (JPanel) Beans.instantiate(null, className);
@@ -89,7 +93,6 @@ public class JFrameExt extends JFrame implements ActionListener {
 				contentPane.add((JPanel) targetBeanObject, 0);
 				contentPane.validate();
 
-				// Populate Labels
 				BeanInfo bi = null;
 				try {
 					classObject = Class.forName(className);
@@ -102,13 +105,35 @@ public class JFrameExt extends JFrame implements ActionListener {
 				String propName;
 
 				for (int i = 0; i < pd.length; i++) {
-					// Get property name from corresponding PropertyDescriptor array element.
-					// Set property name in the corresponding JLabel array element.
+
 					propName = pd[i].getName();
 
-					// Set propName as the text for the corresponding JLable.
 					jlbPropNames[i].setText("  " + propName);
 
+					Class customEditorClass = pd[i].getPropertyEditorClass();
+					PropertyEditor customEditor = null;
+
+					if (customEditorClass != null) {
+						try {
+							customEditor = (PropertyEditor) customEditorClass.newInstance();
+							pe[i] = customEditor;
+						} catch (IllegalAccessException ex) {
+							ex.printStackTrace();
+						} catch (InstantiationException ex) {
+							ex.printStackTrace();
+						}
+					}
+					
+					String[] tags = pe[i].getTags();
+					if(tags == null) {
+						jtfPropValues[i] = new JTextField();
+						jtfPropValues[i].addActionListener(this);
+					}
+					else {
+						jcboPropValues[i] = new JComboBox(tags);
+						jcboPropValues[i].addActionListener(this);
+					}
+					
 					Method mget = pd[i].getReadMethod();
 					Object robj = null;
 
@@ -118,15 +143,25 @@ public class JFrameExt extends JFrame implements ActionListener {
 						e.printStackTrace();
 					}
 
-					// convert the received object contents to a String
 					String sobj = robj.toString();
-
-					// Set the String sobj as the text in the corresponding text field.
+					
+					try {
+						pe[i].setAsText(sobj);
+					}
+					catch(Exception ex){
+						ex.printStackTrace();
+					}
+					
+					if(tags == null) {
 					jtfPropValues[i].setText(sobj);
+					}
+					else {
+						jcboPropValues[i].setSelectedItem(sobj);
+					}
+					
 				}
-				
-				//Clean up old fields
-				for(int i = pd.length; i < 10; i++) {
+
+				for (int i = pd.length; i < 10; i++) {
 					jlbPropNames[i].setText("");
 					jtfPropValues[i].setText("");
 				}
@@ -144,7 +179,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 		panelCenter.add(panelPropNames);
 		panelPropNames.setLayout(new GridLayout(10, 1, 0, 0));
 
-		JPanel panelPropValues = new JPanel();
+		panelPropValues = new JPanel();
 		panelPropValues.setBackground(new Color(0, 100, 0));
 		panelCenter.add(panelPropValues);
 		panelPropValues.setLayout(new GridLayout(10, 1, 0, 0));
@@ -160,7 +195,6 @@ public class JFrameExt extends JFrame implements ActionListener {
 					int i;
 					String propValue = "";
 
-					// Determine the name, value and index of the property that changed.
 					for (i = 0; i < jtfPropValues.length; i++) {
 						propValue = jtfPropValues[i].getText();
 						if (e.getSource() == jtfPropValues[i]) {
@@ -168,21 +202,17 @@ public class JFrameExt extends JFrame implements ActionListener {
 						}
 					}
 
-					//Throwing exceptions when typing in empty fields
-					if(i >= pd.length) {
+					if (i >= pd.length) {
 						System.out.println("Don't Type There...");
 						return;
 					}
-					
+
 					Class<?> propType = pd[i].getPropertyType();
 
-					// Get the property type as a String
 					String propTypeName = propType.getName();
 
-					// Create Object array for storing parameters
 					Object[] params = new Object[1];
 
-					// Depending upon property name, create correct parameter object.
 					if (propTypeName.equals("int")) {
 						params[0] = new Integer(Integer.parseInt(propValue));
 					} else if (propTypeName.equals("double")) {
@@ -193,10 +223,8 @@ public class JFrameExt extends JFrame implements ActionListener {
 						params[0] = propValue;
 					}
 
-					// Get the set method object.
 					Method mset = pd[i].getWriteMethod();
 
-					// Invoke set method and pass it target bean and parameters.
 					try {
 						mset.invoke(targetBeanObject, params);
 					} catch (Exception ex) {
