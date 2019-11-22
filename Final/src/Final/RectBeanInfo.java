@@ -4,7 +4,7 @@ import java.beans.*;
 
 public class RectBeanInfo extends SimpleBeanInfo {
 
-	Class beanClass = Rect.class;
+	Class<Rect> beanClass = Rect.class;
 
 	public RectBeanInfo() {
 	}

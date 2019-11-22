@@ -5,7 +5,7 @@ import java.beans.SimpleBeanInfo;
 
 public class CircBeanInfo extends SimpleBeanInfo {
 	
-	Class beanClass = Circ.class;
+	Class<Circ> beanClass = Circ.class;
 
 	public CircBeanInfo() {
 	}

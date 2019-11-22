@@ -5,7 +5,7 @@ import java.beans.SimpleBeanInfo;
 
 public class TickerBeanInfo extends SimpleBeanInfo {
 
-	Class beanClass = Ticker.class;
+	Class<Ticker> beanClass = Ticker.class;
 
 	public TickerBeanInfo() {
 	}
