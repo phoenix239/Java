@@ -5,8 +5,8 @@ import java.beans.PropertyEditorSupport;
 public class ColorEditor extends PropertyEditorSupport {
 
 	private String colorString;
-	private String[] tags = { "green", "yellow", "blue"};
-	private String[] validColors = {"green", "yellow", "blue"};
+	private String[] tags = { "Green", "Yellow", "Blue"};
+	private String[] validColors = {"Green", "Yellow", "Blue"};
 	
 	/*private String[] tags = { "red", "green", "yellow", "blue"
 			, "black", "cyan", "orange", "gray", "magenta" };
@@ -24,7 +24,7 @@ public class ColorEditor extends PropertyEditorSupport {
 		boolean validString = false;
 		
 		for (int i = 0; i < validColors.length; i++) {
-			if (value.equalsIgnoreCase(validColors[i])) {
+			if (value.equals(validColors[i])) {
 				colorString = value;
 				validString = true;
 				break;

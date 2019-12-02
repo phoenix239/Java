@@ -216,6 +216,9 @@ public class JFrameExt extends JFrame implements ActionListener {
 					}
 
 					String sobj = robj.toString();
+					
+					//fix True/False when returning true/false
+					sobj = sobj.substring(0, 1).toUpperCase() + sobj.substring(1);
 
 					try {
 						pe[i].setAsText(sobj);
@@ -225,7 +228,8 @@ public class JFrameExt extends JFrame implements ActionListener {
 
 					if (tags == null) {
 						jtfPropValues[i].setText(sobj);
-					} else {
+					} 
+					else {
 						jcboPropValues[i].setSelectedItem(sobj);
 					}
 

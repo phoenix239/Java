@@ -4,7 +4,7 @@ import java.beans.PropertyEditorSupport;
 
 public class TrueFalseEditor extends PropertyEditorSupport {
 	private boolean propertyValue = true;
-	private String[] tags = {"true", "false"};
+	private String[] tags = {"True", "False"};
 
 	public TrueFalseEditor() {
 
