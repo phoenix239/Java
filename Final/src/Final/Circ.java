@@ -20,6 +20,8 @@ public class Circ extends JPanel {
 			this.setBackground(Color.blue);
 		} else if (myBackColor.equalsIgnoreCase("Yellow")) {
 			this.setBackground(Color.yellow);
+		} else if (myBackColor.equalsIgnoreCase("Red")) {
+			this.setBackground(Color.red);
 		}
 
 		if (myForeColor.equalsIgnoreCase("Green")) {
@@ -28,6 +30,8 @@ public class Circ extends JPanel {
 			g.setColor(Color.blue);
 		} else if (myForeColor.equalsIgnoreCase("Yellow")) {
 			g.setColor(Color.yellow);
+		} else if (myForeColor.equalsIgnoreCase("Red")) {
+			g.setColor(Color.red);
 		}
 
 		if (myFill) {
