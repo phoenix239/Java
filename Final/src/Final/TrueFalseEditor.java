@@ -4,20 +4,19 @@ import java.beans.PropertyEditorSupport;
 
 public class TrueFalseEditor extends PropertyEditorSupport {
 	private boolean propertyValue = true;
+	private String[] tags = {"true", "false"};
 
 	public TrueFalseEditor() {
 
 	}
 
 	public String[] getTags() {
-		return null;
+		//return null;
+		return (String[]) tags.clone();
 	}
 
 	public void setAsText(String value) {
-		boolean val = new Boolean(value).booleanValue();
-		if (val != true || val != false)
-			throw new IllegalArgumentException(value);
-		propertyValue = val;
+		propertyValue = new Boolean(value).booleanValue();
 	}
 
 	public String getAsText() {

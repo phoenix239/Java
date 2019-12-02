@@ -31,7 +31,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 	private PropertyEditor[] pe = new PropertyEditor[10];
 	private JPanel targetBeanObject = null;
 	private Class<?> classObject = null;
-	private PropertyDescriptor[] pd = null;
+	private PropertyDescriptor[] pd = new PropertyDescriptor[10];
 	JPanel panelPropValues;
 
 	public static void main(String[] args) {
@@ -78,6 +78,8 @@ public class JFrameExt extends JFrame implements ActionListener {
 
 				if (className.equalsIgnoreCase("")) {
 					className = "Final.Blank";
+					panelPropValues.revalidate();
+					panelPropValues.repaint();
 				}
 
 				try {
@@ -103,6 +105,10 @@ public class JFrameExt extends JFrame implements ActionListener {
 				pd = bi.getPropertyDescriptors();
 
 				String propName;
+				
+				panelPropValues.removeAll();
+
+				panelPropValues.validate();
 
 				for (int i = 0; i < pd.length; i++) {
 
@@ -124,16 +130,82 @@ public class JFrameExt extends JFrame implements ActionListener {
 						}
 					}
 					
+					//Add Value Fields, either text or combo
 					String[] tags = pe[i].getTags();
-					if(tags == null) {
+					
+					//Text
+					if (tags == null) {
 						jtfPropValues[i] = new JTextField();
-						jtfPropValues[i].addActionListener(this);
-					}
+						
+						int loc = i;
+						jtfPropValues[i].addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								String propValue = jtfPropValues[loc].getText();
+
+								String propTypeName = pd[loc].getPropertyType().getName();
+
+								Object[] params = new Object[1];
+
+								if (propTypeName.equals("int")) {
+									params[0] = new Integer(Integer.parseInt(propValue));
+								} else if (propTypeName.equals("double")) {
+									params[0] = new Double(Double.parseDouble(propValue));
+								} else if (propTypeName.equals("boolean")) {
+									params[0] = new Boolean(propValue);
+								} else if (propTypeName.equals("java.lang.String")) {
+									params[0] = propValue;
+								}
+
+								Method mset = pd[loc].getWriteMethod();
+
+								try {
+									mset.invoke(targetBeanObject, params);
+								} catch (Exception ex) {
+									ex.printStackTrace();
+								}
+							}
+						});
+
+						panelPropValues.add(jtfPropValues[i]);
+						panelPropValues.validate();
+					} 
+					//Combo
 					else {
 						jcboPropValues[i] = new JComboBox(tags);
-						jcboPropValues[i].addActionListener(this);
+
+						int loc = i;
+						jcboPropValues[i].addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								
+								String propValue = (String) jcboPropValues[loc].getSelectedItem();
+
+								String propTypeName = pd[loc].getPropertyType().getName();
+
+								Object[] params = new Object[1];
+
+								if (propTypeName.equals("int")) {
+									params[0] = new Integer(Integer.parseInt(propValue));
+								} else if (propTypeName.equals("double")) {
+									params[0] = new Double(Double.parseDouble(propValue));
+								} else if (propTypeName.equals("boolean")) {
+									params[0] = new Boolean(propValue);
+								} else if (propTypeName.equals("java.lang.String")) {
+									params[0] = propValue;
+								}
+
+								Method mset = pd[loc].getWriteMethod();
+
+								try {
+									mset.invoke(targetBeanObject, params);
+								} catch (Exception ex) {
+									ex.printStackTrace();
+								}
+							}
+						});
+						panelPropValues.add(jcboPropValues[i]);
+						panelPropValues.validate();
 					}
-					
+
 					Method mget = pd[i].getReadMethod();
 					Object robj = null;
 
@@ -144,26 +216,23 @@ public class JFrameExt extends JFrame implements ActionListener {
 					}
 
 					String sobj = robj.toString();
-					
+
 					try {
 						pe[i].setAsText(sobj);
-					}
-					catch(Exception ex){
+					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
-					
-					if(tags == null) {
-					jtfPropValues[i].setText(sobj);
-					}
-					else {
+
+					if (tags == null) {
+						jtfPropValues[i].setText(sobj);
+					} else {
 						jcboPropValues[i].setSelectedItem(sobj);
 					}
-					
+
 				}
 
 				for (int i = pd.length; i < 10; i++) {
 					jlbPropNames[i].setText("");
-					jtfPropValues[i].setText("");
 				}
 			}
 		});
@@ -187,53 +256,6 @@ public class JFrameExt extends JFrame implements ActionListener {
 		for (int i = 0; i < jlbPropNames.length; i++) {
 			jlbPropNames[i] = new JLabel("");
 			panelPropNames.add(jlbPropNames[i]);
-		}
-		for (int i = 0; i < jtfPropValues.length; i++) {
-			jtfPropValues[i] = new JTextField(10);
-			jtfPropValues[i].addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					int i;
-					String propValue = "";
-
-					for (i = 0; i < jtfPropValues.length; i++) {
-						propValue = jtfPropValues[i].getText();
-						if (e.getSource() == jtfPropValues[i]) {
-							break;
-						}
-					}
-
-					if (i >= pd.length) {
-						System.out.println("Don't Type There...");
-						return;
-					}
-
-					Class<?> propType = pd[i].getPropertyType();
-
-					String propTypeName = propType.getName();
-
-					Object[] params = new Object[1];
-
-					if (propTypeName.equals("int")) {
-						params[0] = new Integer(Integer.parseInt(propValue));
-					} else if (propTypeName.equals("double")) {
-						params[0] = new Double(Double.parseDouble(propValue));
-					} else if (propTypeName.equals("boolean")) {
-						params[0] = new Boolean(propValue);
-					} else if (propTypeName.equals("java.lang.String")) {
-						params[0] = propValue;
-					}
-
-					Method mset = pd[i].getWriteMethod();
-
-					try {
-						mset.invoke(targetBeanObject, params);
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-				}
-			});
-			panelPropValues.add(jtfPropValues[i]);
-
 		}
 	}
 
