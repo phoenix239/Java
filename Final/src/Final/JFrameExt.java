@@ -105,9 +105,8 @@ public class JFrameExt extends JFrame implements ActionListener {
 				pd = bi.getPropertyDescriptors();
 
 				String propName;
-				
-				panelPropValues.removeAll();
 
+				panelPropValues.removeAll();
 				panelPropValues.validate();
 
 				for (int i = 0; i < pd.length; i++) {
@@ -123,20 +122,18 @@ public class JFrameExt extends JFrame implements ActionListener {
 						try {
 							customEditor = (PropertyEditor) customEditorClass.newInstance();
 							pe[i] = customEditor;
-						} catch (IllegalAccessException ex) {
-							ex.printStackTrace();
-						} catch (InstantiationException ex) {
+						} catch (Exception ex) {
 							ex.printStackTrace();
 						}
 					}
-					
-					//Add Value Fields, either text or combo
+
+					// Add Value Fields, either text or combo
 					String[] tags = pe[i].getTags();
-					
-					//Text
+
+					// Text
 					if (tags == null) {
 						jtfPropValues[i] = new JTextField();
-						
+
 						int loc = i;
 						jtfPropValues[i].addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
@@ -168,15 +165,14 @@ public class JFrameExt extends JFrame implements ActionListener {
 
 						panelPropValues.add(jtfPropValues[i]);
 						panelPropValues.validate();
-					} 
-					//Combo
+					}
+					// Combo
 					else {
 						jcboPropValues[i] = new JComboBox(tags);
 
 						int loc = i;
 						jcboPropValues[i].addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								
 								String propValue = (String) jcboPropValues[loc].getSelectedItem();
 
 								String propTypeName = pd[loc].getPropertyType().getName();
@@ -216,8 +212,8 @@ public class JFrameExt extends JFrame implements ActionListener {
 					}
 
 					String sobj = robj.toString();
-					
-					//fix True/False when returning true/false
+
+					// fix True/False when returning true/false
 					sobj = sobj.substring(0, 1).toUpperCase() + sobj.substring(1);
 
 					try {
@@ -228,8 +224,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 
 					if (tags == null) {
 						jtfPropValues[i].setText(sobj);
-					} 
-					else {
+					} else {
 						jcboPropValues[i].setSelectedItem(sobj);
 					}
 
