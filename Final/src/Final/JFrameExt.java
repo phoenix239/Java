@@ -108,12 +108,17 @@ public class JFrameExt extends JFrame implements ActionListener {
 				panelPropValues.removeAll();
 				panelPropValues.validate();
 
+				// clear old names
+				for (int i = 0; i < 10; i++) {
+					jlbPropNames[i].setText("");
+				}
+
 				for (int i = 0; i < pd.length; i++) {
 
 					jlbPropNames[i].setText("  " + pd[i].getName());
 
 					Class customEditorClass = pd[i].getPropertyEditorClass();
-					
+
 					PropertyEditor customEditor = null;
 
 					if (customEditorClass != null) {
@@ -136,7 +141,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 						jtfPropValues[i].addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								String propValue = jtfPropValues[loc].getText();
-								
+
 								try {
 									pe[loc].setAsText(propValue);
 								} catch (Exception ex) {
@@ -156,7 +161,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 								} else if (propTypeName.equals("java.lang.String")) {
 									params[0] = propValue;
 								}
-								
+
 								Method mset = pd[loc].getWriteMethod();
 
 								try {
@@ -178,13 +183,13 @@ public class JFrameExt extends JFrame implements ActionListener {
 						jcboPropValues[i].addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								String propValue = (String) jcboPropValues[loc].getSelectedItem();
-								
+
 								try {
 									pe[loc].setAsText(propValue);
 								} catch (Exception ex) {
 									ex.printStackTrace();
 								}
-								
+
 								String propTypeName = pd[loc].getPropertyType().getName();
 
 								Object[] params = new Object[1];
@@ -198,9 +203,9 @@ public class JFrameExt extends JFrame implements ActionListener {
 								} else if (propTypeName.equals("java.lang.String")) {
 									params[0] = propValue;
 								}
-								
+
 								Method mset = pd[loc].getWriteMethod();
-								
+
 								try {
 									mset.invoke(targetBeanObject, params);
 								} catch (Exception ex) {
@@ -237,11 +242,6 @@ public class JFrameExt extends JFrame implements ActionListener {
 					} else {
 						jcboPropValues[i].setSelectedItem(sobj);
 					}
-
-				}
-
-				for (int i = pd.length; i < 10; i++) {
-					jlbPropNames[i].setText("");
 				}
 			}
 		});
@@ -261,7 +261,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 		panelPropValues.setBackground(new Color(0, 100, 0));
 		panelCenter.add(panelPropValues);
 		panelPropValues.setLayout(new GridLayout(10, 1, 0, 0));
-		
+
 		for (int i = 0; i < jlbPropNames.length; i++) {
 			jlbPropNames[i] = new JLabel("");
 			panelPropNames.add(jlbPropNames[i]);
