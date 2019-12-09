@@ -33,6 +33,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 	private Class<?> classObject = null;
 	private PropertyDescriptor[] pd = new PropertyDescriptor[10];
 	JPanel panelPropValues;
+	JPanel panelPropNames;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -104,18 +105,15 @@ public class JFrameExt extends JFrame implements ActionListener {
 				}
 				pd = bi.getPropertyDescriptors();
 
-				String propName;
-
 				panelPropValues.removeAll();
 				panelPropValues.validate();
 
 				for (int i = 0; i < pd.length; i++) {
 
-					propName = pd[i].getName();
-
-					jlbPropNames[i].setText("  " + propName);
+					jlbPropNames[i].setText("  " + pd[i].getName());
 
 					Class customEditorClass = pd[i].getPropertyEditorClass();
+					
 					PropertyEditor customEditor = null;
 
 					if (customEditorClass != null) {
@@ -138,6 +136,12 @@ public class JFrameExt extends JFrame implements ActionListener {
 						jtfPropValues[i].addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								String propValue = jtfPropValues[loc].getText();
+								
+								try {
+									pe[loc].setAsText(propValue);
+								} catch (Exception ex) {
+									ex.printStackTrace();
+								}
 
 								String propTypeName = pd[loc].getPropertyType().getName();
 
@@ -152,7 +156,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 								} else if (propTypeName.equals("java.lang.String")) {
 									params[0] = propValue;
 								}
-
+								
 								Method mset = pd[loc].getWriteMethod();
 
 								try {
@@ -174,7 +178,13 @@ public class JFrameExt extends JFrame implements ActionListener {
 						jcboPropValues[i].addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								String propValue = (String) jcboPropValues[loc].getSelectedItem();
-
+								
+								try {
+									pe[loc].setAsText(propValue);
+								} catch (Exception ex) {
+									ex.printStackTrace();
+								}
+								
 								String propTypeName = pd[loc].getPropertyType().getName();
 
 								Object[] params = new Object[1];
@@ -188,9 +198,9 @@ public class JFrameExt extends JFrame implements ActionListener {
 								} else if (propTypeName.equals("java.lang.String")) {
 									params[0] = propValue;
 								}
-
+								
 								Method mset = pd[loc].getWriteMethod();
-
+								
 								try {
 									mset.invoke(targetBeanObject, params);
 								} catch (Exception ex) {
@@ -242,7 +252,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 		panelRight.add(panelCenter, BorderLayout.CENTER);
 		panelCenter.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JPanel panelPropNames = new JPanel();
+		panelPropNames = new JPanel();
 		panelPropNames.setBackground(new Color(64, 224, 208));
 		panelCenter.add(panelPropNames);
 		panelPropNames.setLayout(new GridLayout(10, 1, 0, 0));
@@ -251,7 +261,7 @@ public class JFrameExt extends JFrame implements ActionListener {
 		panelPropValues.setBackground(new Color(0, 100, 0));
 		panelCenter.add(panelPropValues);
 		panelPropValues.setLayout(new GridLayout(10, 1, 0, 0));
-
+		
 		for (int i = 0; i < jlbPropNames.length; i++) {
 			jlbPropNames[i] = new JLabel("");
 			panelPropNames.add(jlbPropNames[i]);

@@ -5,7 +5,7 @@ import java.beans.PropertyEditorSupport;
 public class ColorEditor extends PropertyEditorSupport {
 
 	private String colorString;
-	private String[] tags = { "Red", "Green", "Yellow", "Blue"};
+	private String[] tags = { "Red", "Green", "Yellow", "Blue", "Black"};
 	private String[] validColors = {"Red", "Green", "Yellow", "Blue"};
 	
 	/*private String[] tags = { "red", "green", "yellow", "blue"
