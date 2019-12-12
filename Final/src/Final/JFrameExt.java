@@ -146,6 +146,9 @@ public class JFrameExt extends JFrame implements ActionListener {
 									pe[loc].setAsText(propValue);
 								} catch (Exception ex) {
 									ex.printStackTrace();
+									String pValue = pe[loc].getAsText();
+									jtfPropValues[loc].setText(pValue);
+									return;
 								}
 
 								String propTypeName = pd[loc].getPropertyType().getName();
@@ -188,6 +191,10 @@ public class JFrameExt extends JFrame implements ActionListener {
 									pe[loc].setAsText(propValue);
 								} catch (Exception ex) {
 									ex.printStackTrace();
+									String pValue = pe[loc].getAsText();
+									System.out.println(pValue);
+									jcboPropValues[loc].setSelectedItem(pValue);
+									return;
 								}
 
 								String propTypeName = pd[loc].getPropertyType().getName();
